@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bangladesh Payment System Guide — TatataPay</title>
+    <style>
+        :root { --primary: #1a1f71; --accent: #00d084; --bg: #f8f9fa; --text: #333; --border: #e0e0e0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        header { background: var(--primary); color: #fff; padding: 40px 20px; text-align: center; }
+        header h1 { font-size: 2em; margin-bottom: 10px; }
+        header p { opacity: 0.85; font-size: 1.1em; }
+        nav { background: #fff; border-bottom: 2px solid var(--border); padding: 15px 20px; position: sticky; top: 0; z-index: 100; }
+        nav a { color: var(--primary); text-decoration: none; margin-right: 20px; font-weight: 600; font-size: 0.95em; }
+        nav a:hover { color: var(--accent); }
+        section { background: #fff; margin: 20px 0; padding: 30px; border-radius: 8px; border: 1px solid var(--border); }
+        h2 { color: var(--primary); font-size: 1.5em; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 3px solid var(--accent); }
+        h3 { color: var(--primary); margin: 20px 0 10px; font-size: 1.2em; }
+        h4 { margin: 15px 0 8px; color: #555; }
+        .step { background: #f0f7ff; border-left: 4px solid var(--primary); padding: 15px 20px; margin: 15px 0; border-radius: 0 6px 6px 0; }
+        .step-number { display: inline-block; background: var(--primary); color: #fff; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-weight: bold; margin-right: 10px; font-size: 0.9em; }
+        .warning { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px 20px; margin: 15px 0; border-radius: 0 6px 6px 0; }
+        .warning::before { content: "⚠️ "; }
+        .info { background: #d1ecf1; border-left: 4px solid #17a2b8; padding: 15px 20px; margin: 15px 0; border-radius: 0 6px 6px 0; }
+        .info::before { content: "ℹ️ "; }
+        .success { background: #d4edda; border-left: 4px solid var(--accent); padding: 15px 20px; margin: 15px 0; border-radius: 0 6px 6px 0; }
+        .success::before { content: "✅ "; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th, td { padding: 12px 15px; text-align: left; border: 1px solid var(--border); }
+        th { background: var(--primary); color: #fff; font-weight: 600; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        code { background: #e9ecef; padding: 2px 6px; border-radius: 3px; font-family: 'Consolas', monospace; font-size: 0.9em; }
+        .code-block { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 6px; margin: 15px 0; overflow-x: auto; font-family: 'Consolas', monospace; font-size: 0.9em; white-space: pre; }
+        ul, ol { padding-left: 25px; margin: 10px 0; }
+        li { margin: 5px 0; }
+        .toc { background: #fff; padding: 20px 30px; border-radius: 8px; border: 1px solid var(--border); margin: 20px 0; }
+        .toc h3 { margin-top: 0; }
+        .toc a { display: block; padding: 5px 0; color: var(--primary); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        footer { text-align: center; padding: 30px; color: #888; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🇧🇩 Bangladesh Payment System Guide</h1>
+    <p>Complete setup guide for bKash & Nagad payment channels on TatataPay</p>
+</header>
+
+<div class="container">
+
+<nav>
+    <a href="#overview">Overview</a>
+    <a href="#supported">Supported Methods</a>
+    <a href="#add-card">Add Card</a>
+    <a href="#otp-monitoring">OTP Monitoring</a>
+    <a href="#merchant-setup">Merchant Setup</a>
+    <a href="#order-flow">Order Flow</a>
+    <a href="#risk-control">Risk Control</a>
+    <a href="#troubleshooting">Troubleshooting</a>
+</nav>
+
+<div class="toc">
+    <h3>📑 Table of Contents</h3>
+    <a href="#overview">1. System Overview</a>
+    <a href="#supported">2. Supported Payment Methods</a>
+    <a href="#add-card">3. Adding a bKash / Nagad Collection Card</a>
+    <a href="#otp-monitoring">4. Setting Up OTP Monitoring</a>
+    <a href="#bank-monitoring">5. Setting Up Bank Transaction Monitoring</a>
+    <a href="#merchant-setup">6. Merchant Onboarding</a>
+    <a href="#product-config">7. Payment Product Configuration</a>
+    <a href="#order-flow">8. Collection Order Flow</a>
+    <a href="#payout-flow">9. Payout (Disbursement) Flow</a>
+    <a href="#risk-control">10. Risk Control Settings</a>
+    <a href="#troubleshooting">11. Troubleshooting & FAQ</a>
+</div>
+
+<!-- Section 1: Overview -->
+<section id="overview">
+    <h2>1. System Overview</h2>
+    <p>TatataPay is a fully-managed payment gateway system designed for iGaming operators and PSPs. This guide covers the setup and operation of <strong>Bangladesh payment channels</strong> — including bKash, Nagad, and Rocket.</p>
+    
+    <h3>Key Roles</h3>
+    <table>
+        <tr><th>Role</th><th>Description</th><th>Responsibility</th></tr>
+        <tr><td><strong>Payment Company (You)</strong></td><td>System operator</td><td>Manage the platform, process orders, monitor funds</td></tr>
+        <tr><td><strong>Merchant</strong></td><td>Your client (gaming platform, etc.)</td><td>Sends collection/payout orders via API</td></tr>
+        <tr><td><strong>Code Merchant (供卡方)</strong></td><td>Account provider</td><td>Provides bKash/Nagad accounts, monitors transactions</td></tr>
+    </table>
+
+    <div class="info">If you operate your own bKash/Nagad accounts (no third-party code merchant), you can skip the "Code Merchant" setup and manage cards directly.</div>
+</section>
+
+<!-- Section 2: Supported Methods -->
+<section id="supported">
+    <h2>2. Supported Payment Methods (Bangladesh)</h2>
+    <table>
+        <tr><th>Method</th><th>Type</th><th>Collection (代收)</th><th>Payout (代付)</th></tr>
+        <tr><td>🟢 <strong>bKash</strong></td><td>Mobile Wallet</td><td>✅</td><td>✅</td></tr>
+        <tr><td>🟢 <strong>Nagad</strong></td><td>Mobile Wallet</td><td>✅</td><td>✅</td></tr>
+        <tr><td>🟡 <strong>Rocket</strong></td><td>Mobile Wallet</td><td>✅</td><td>✅</td></tr>
+        <tr><td>🟡 <strong>Upay</strong></td><td>Mobile Wallet</td><td>✅</td><td>⚠️ Limited</td></tr>
+    </table>
+    <div class="info">bKash is the most widely used payment method in Bangladesh, covering 80M+ users. Prioritize bKash for maximum coverage.</div>
+</section>
+
+<!-- Section 3: Add Card -->
+<section id="add-card">
+    <h2>3. Adding a bKash / Nagad Collection Card</h2>
+    <p>To start receiving payments, you need to add your bKash or Nagad merchant account to the system.</p>
+    
+    <div class="step">
+        <span class="step-number">1</span>
+        <strong>Navigate to Resource Management → Add Card</strong>
+    </div>
+    
+    <div class="step">
+        <span class="step-number">2</span>
+        <strong>Fill in the card details:</strong>
+        <ul>
+            <li><strong>Code Merchant:</strong> Select the code merchant (leave blank if you manage your own accounts)</li>
+            <li><strong>Channel Type:</strong> Select <code>bKash</code> or <code>Nagad</code></li>
+            <li><strong>Mode:</strong> Keep default (embedded identification code)</li>
+            <li><strong>Account Number:</strong> Enter the bKash/Nagad phone number (e.g., <code>01XXXXXXXXX</code>)</li>
+            <li><strong>Remarks:</strong> Optional — add a label for easy identification</li>
+        </ul>
+    </div>
+    
+    <div class="step">
+        <span class="step-number">3</span>
+        <strong>Save — the system will auto-generate:</strong>
+        <ul>
+            <li>A <strong>Monitoring Account</strong> (username)</li>
+            <li>A <strong>Monitoring Password</strong></li>
+        </ul>
+        <p>Keep these credentials — you'll need them for OTP monitoring setup.</p>
+    </div>
+
+    <div class="step">
+        <span class="step-number">4</span>
+        <strong>Configure Risk Controls</strong> (see <a href="#risk-control">Risk Control section</a>)
+    </div>
+
+    <div class="warning">Multiple cards can share the same monitoring account. You can also modify the monitoring account independently.</div>
+</section>
+
+<!-- Section 4: OTP Monitoring -->
+<section id="otp-monitoring">
+    <h2>4. Setting Up OTP Monitoring</h2>
+    <p>OTP monitoring captures SMS verification codes from the bKash/Nagad account's phone and automatically forwards them to the system backend. This is essential for automated transaction verification.</p>
+
+    <h3>Prerequisites</h3>
+    <ul>
+        <li>The phone that receives bKash/Nagad OTP SMS</li>
+        <li>Our monitoring app installed on that phone</li>
+        <li>Monitoring account credentials (generated when you added the card)</li>
+    </ul>
+
+    <h3>Setup Steps</h3>
+    <div class="step">
+        <span class="step-number">1</span>
+        <strong>Install the monitoring app</strong> on the phone linked to the bKash/Nagad account
+    </div>
+    
+    <div class="step">
+        <span class="step-number">2</span>
+        <strong>Grant all required permissions</strong> — check that all permission indicators are green (top-left of the app). If not, tap "Get Permissions" (top-right).
+    </div>
+    
+    <div class="step">
+        <span class="step-number">3</span>
+        <strong>Enter login credentials in the app:</strong>
+        <div class="code-block">Monitoring account: [your monitoring username]
+Login password: [your monitoring password]  
+Server configuration: https://your-domain.com</div>
+        <p><em>Note: Include <code>https://</code> prefix. Do NOT add a trailing slash <code>/</code></em></p>
+    </div>
+    
+    <div class="step">
+        <span class="step-number">4</span>
+        <strong>Tap Login</strong> — the app will start capturing OTP messages automatically
+    </div>
+
+    <div class="success">Once connected, any bKash/Nagad OTP received on this phone will be automatically forwarded to the system backend for transaction verification.</div>
+
+    <h3>Template to Send to Local Operator</h3>
+    <div class="code-block">Please install the monitoring app and log in with these credentials:
+
+Monitoring account: XXXXXXXX
+Login password: XXXXXXXX
+Server configuration: https://your-domain.com
+
+After logging in, make sure all permission indicators are green.
+The app will automatically capture and upload OTP codes.</div>
+</section>
+
+<!-- Section 5: Bank Monitoring -->
+<section id="bank-monitoring">
+    <h2>5. Setting Up Transaction Monitoring</h2>
+    <p>Transaction monitoring automatically captures bKash/Nagad transaction records and uploads them to the backend for automatic order matching.</p>
+
+    <h3>How It Works</h3>
+    <ol>
+        <li>A customer makes a payment to your bKash/Nagad account</li>
+        <li>The monitoring system detects the incoming transaction</li>
+        <li>Transaction details are uploaded to the backend</li>
+        <li>The system automatically matches the transaction to the corresponding order</li>
+        <li>If matched → order marked as <strong>Success</strong>, callback sent to merchant</li>
+        <li>If not matched → flagged for <strong>Manual Review</strong></li>
+    </ol>
+
+    <h3>Matching Methods</h3>
+    <table>
+        <tr><th>Method</th><th>Description</th><th>Recommended</th></tr>
+        <tr><td>Amount Matching</td><td>Match by payment amount</td><td>⚠️ Basic</td></tr>
+        <tr><td>Identification Code + Amount</td><td>Unique code embedded in payment + amount</td><td>✅ Recommended</td></tr>
+        <tr><td>Payment Info + Amount</td><td>Customer-submitted info + amount</td><td>⚠️ Backup</td></tr>
+    </table>
+</section>
+
+<!-- Section 6: Merchant Setup -->
+<section id="merchant-setup">
+    <h2>6. Merchant Onboarding</h2>
+    
+    <div class="step">
+        <span class="step-number">1</span>
+        <strong>Create Merchant Account:</strong> Go to Merchant Management → Add Merchant → Enter nickname, username, password → Submit
+    </div>
+    
+    <div class="step">
+        <span class="step-number">2</span>
+        <strong>Copy Integration Credentials:</strong> Click the "Integration Info" copy button → Send to merchant's technical team
+    </div>
+    
+    <div class="step">
+        <span class="step-number">3</span>
+        <strong>Configure Merchant Settings:</strong>
+        <ul>
+            <li><strong>Fee Rate:</strong> e.g., <code>0.02</code> = 2% per transaction</li>
+            <li><strong>Fixed Fee:</strong> Per-transaction fixed fee (mainly for payouts)</li>
+            <li><strong>IP Whitelist:</strong> Add merchant's server IP for security (format: <code>182.234.96.152,47.232.188.71</code>)</li>
+            <li><strong>Account Allocation:</strong> Assign specific code merchants to this merchant</li>
+            <li><strong>Bot Group ID:</strong> For Telegram accounting bot integration</li>
+        </ul>
+    </div>
+    
+    <div class="step">
+        <span class="step-number">4</span>
+        <strong>Merchant integrates via API</strong> using the provided documentation. Our team assists with any technical issues during integration.
+    </div>
+</section>
+
+<!-- Section 7: Product Config -->
+<section id="product-config">
+    <h2>7. Payment Product Configuration</h2>
+    <p>Configure different products with different fee rates for each merchant.</p>
+    
+    <h3>Path: System Management → User Product Management → Add</h3>
+    <ul>
+        <li><strong>Merchant:</strong> Select target merchant</li>
+        <li><strong>Product:</strong> Select the payment product (e.g., bKash Collection, Nagad Payout)</li>
+        <li><strong>Fee Rate:</strong> Percentage fee — e.g., <code>0.02</code> for 2%</li>
+        <li><strong>Fixed Fee:</strong> Per-transaction fee — e.g., <code>5</code> for 5 BDT per transaction</li>
+    </ul>
+
+    <h3>Combined Channel IDs</h3>
+    <table>
+        <tr><th>Channel</th><th>ID</th><th>Description</th></tr>
+        <tr><td>Combined Collection</td><td><code>3021</code></td><td>Supports all collection methods (scan + redirect)</td></tr>
+        <tr><td>Combined Payout</td><td><code>3020</code></td><td>Supports all payout methods (internal cards + external channels)</td></tr>
+    </table>
+</section>
+
+<!-- Section 8: Order Flow -->
+<section id="order-flow">
+    <h2>8. Collection Order Flow</h2>
+    
+    <h3>Complete Flow</h3>
+    <ol>
+        <li><strong>Customer</strong> places an order on the merchant's platform</li>
+        <li><strong>Merchant</strong> sends a collection request via API</li>
+        <li><strong>System</strong> validates: API key, IP whitelist, merchant ID, channel ID</li>
+        <li><strong>System</strong> allocates an available bKash/Nagad account</li>
+        <li><strong>System</strong> checks account availability: enabled? balance OK? within limits?</li>
+        <li><strong>System</strong> generates a <strong>cashier page link</strong></li>
+        <li><strong>Customer</strong> pays via the cashier page (bKash/Nagad)</li>
+        <li><strong>Monitoring</strong> detects incoming payment</li>
+        <li><strong>System</strong> matches transaction to order</li>
+        <li><strong>System</strong> sends <strong>callback</strong> to merchant → Order complete</li>
+    </ol>
+
+    <h3>Order Statuses</h3>
+    <table>
+        <tr><th>Status</th><th>Meaning</th></tr>
+        <tr><td>Created</td><td>Order created, not yet processed</td></tr>
+        <tr><td>Assigned</td><td>Allocated to a specific bKash/Nagad account</td></tr>
+        <tr><td>Processing</td><td>Waiting for customer payment</td></tr>
+        <tr><td>Success</td><td>Payment confirmed</td></tr>
+        <tr><td>Failed</td><td>Payment verification failed</td></tr>
+        <tr><td>Timeout</td><td>No payment received within time limit</td></tr>
+        <tr><td>Closed</td><td>Order cancelled</td></tr>
+    </table>
+</section>
+
+<!-- Section 9: Payout -->
+<section id="payout-flow">
+    <h2>9. Payout (Disbursement) Flow</h2>
+    <p>Payouts allow merchants to send money from the system to customer bKash/Nagad accounts.</p>
+
+    <h3>Methods</h3>
+    <ul>
+        <li><strong>Single Payout:</strong> One-by-one disbursement via API</li>
+        <li><strong>Bulk Payout:</strong> Batch processing multiple payouts at once</li>
+        <li><strong>Manual Payout:</strong> Process from admin panel directly</li>
+    </ul>
+
+    <h3>Payout Card Setup</h3>
+    <p>Add payout cards in <strong>Resource Management → Add Payout Card</strong>. Similar to collection cards, but these accounts will be used to <em>send</em> money.</p>
+</section>
+
+<!-- Section 10: Risk Control -->
+<section id="risk-control">
+    <h2>10. Risk Control Settings</h2>
+    <p>Each card can have independent risk control parameters:</p>
+
+    <table>
+        <tr><th>Setting</th><th>Example</th><th>Effect</th></tr>
+        <tr><td><strong>Daily Transaction Limit</strong></td><td><code>10</code></td><td>Auto-disable after 10 successful transactions today</td></tr>
+        <tr><td><strong>Daily Amount Limit</strong></td><td><code>500000</code></td><td>Auto-disable after 500,000 BDT received today</td></tr>
+        <tr><td><strong>Balance Limit</strong></td><td><code>1000000</code></td><td>Auto-disable when account balance reaches 1M BDT</td></tr>
+        <tr><td><strong>Amount Range</strong></td><td><code>100-50000</code></td><td>Only accept orders between 100-50,000 BDT</td></tr>
+        <tr><td><strong>Fixed Amounts</strong></td><td><code>500,1000,2000</code></td><td>Only accept orders of exactly 500, 1000, or 2000 BDT</td></tr>
+    </table>
+
+    <div class="warning">When any limit is reached, the card automatically stops accepting new orders. You must manually re-enable it or adjust the limits.</div>
+</section>
+
+<!-- Section 11: Troubleshooting -->
+<section id="troubleshooting">
+    <h2>11. Troubleshooting & FAQ</h2>
+
+    <h3>Q: OTP monitoring is not capturing messages</h3>
+    <div class="step">
+        <ul>
+            <li>Check that all permission indicators are <strong>green</strong> in the monitoring app</li>
+            <li>Verify the server URL is correct (include <code>https://</code>, no trailing <code>/</code>)</li>
+            <li>Ensure the phone has a stable internet connection</li>
+            <li>Restart the monitoring app</li>
+        </ul>
+    </div>
+
+    <h3>Q: Order is stuck in "Processing" status</h3>
+    <div class="step">
+        <ul>
+            <li>Check if the customer actually completed the payment</li>
+            <li>Verify the monitoring system is running and uploading transactions</li>
+            <li>If payment was made but not matched, use <strong>Manual Review</strong> to match the order</li>
+        </ul>
+    </div>
+
+    <h3>Q: Callback failed to merchant</h3>
+    <div class="step">
+        <ul>
+            <li>Check merchant's server is reachable</li>
+            <li>Verify merchant's callback URL is correct</li>
+            <li>Use <strong>Manual Callback</strong> to resend the notification</li>
+        </ul>
+    </div>
+
+    <h3>Q: Card was auto-disabled</h3>
+    <div class="step">
+        <ul>
+            <li>Check which risk control limit was triggered (daily count, amount, or balance)</li>
+            <li>Adjust the limits or manually re-enable the card</li>
+        </ul>
+    </div>
+
+    <h3>Q: How to add a proxy bKash card?</h3>
+    <div class="step">
+        <ul>
+            <li>A "proxy card" is simply a bKash/Nagad account provided by a code merchant (third-party supplier)</li>
+            <li>Add it the same way as any other card — go to <strong>Resource Management → Add Card</strong></li>
+            <li>Select the <strong>Code Merchant</strong> who provided the account</li>
+            <li>Enter the bKash/Nagad account number</li>
+            <li>Set up OTP monitoring on the code merchant's phone</li>
+            <li>The code merchant monitors transactions and manages the account</li>
+        </ul>
+    </div>
+</section>
+
+</div>
+
+<footer>
+    <p>TatataPay Bangladesh Payment Guide — Internal Documentation</p>
+    <p>Last updated: June 2026</p>
+</footer>
+
+</body>
+</html>
