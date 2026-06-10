@@ -52,6 +52,7 @@
 <div class="container">
 
 <nav>
+    <a href="#switch-country">Setup</a>
     <a href="#overview">Overview</a>
     <a href="#supported">Supported Methods</a>
     <a href="#add-card">Add Card</a>
@@ -64,6 +65,7 @@
 
 <div class="toc">
     <h3>📑 Table of Contents</h3>
+    <a href="#switch-country">⚙️ Prerequisites: Switch to Bangladesh Region</a>
     <a href="#overview">1. System Overview</a>
     <a href="#supported">2. Supported Payment Methods</a>
     <a href="#add-card">3. Adding a bKash / Nagad Collection Card</a>
@@ -76,6 +78,31 @@
     <a href="#risk-control">10. Risk Control Settings</a>
     <a href="#troubleshooting">11. Troubleshooting & FAQ</a>
 </div>
+
+<!-- Section 0: Switch Country -->
+<section id="switch-country">
+    <h2>⚙️ Prerequisites: Switch to Bangladesh Region</h2>
+    <p>Before setting up Bangladesh payment channels, you must first switch the system's default country to Bangladesh.</p>
+    
+    <div class="step">
+        <span class="step-number">1</span>
+        <strong>Go to Home page → scroll down to the "Settings" section at the bottom</strong>
+    </div>
+    
+    <div class="step">
+        <span class="step-number">2</span>
+        <strong>In the "default country" dropdown, type <code>孟加拉</code> (Bangladesh) and select it</strong>
+    </div>
+    
+    <div class="step">
+        <span class="step-number">3</span>
+        <strong>Click the "Settings" button → Confirm the change</strong>
+    </div>
+
+    <img src="images/01-home-settings.jpg" alt="Home page - Settings section showing default country selector" style="max-width:100%;border:1px solid #ddd;border-radius:6px;margin:15px 0;">
+    
+    <div class="warning">Changing the default country affects which payment channels are available system-wide. After switching to Bangladesh, Channel type dropdowns will show bKash, Nagad, etc. instead of UPI options.</div>
+</section>
 
 <!-- Section 1: Overview -->
 <section id="overview">
@@ -160,6 +187,14 @@
         <strong>Configure Risk Controls</strong> (see <a href="#risk-control">Risk Control section</a>)
     </div>
 
+    <h3>📸 Bank Account List (Bangladesh Mode)</h3>
+    <img src="images/08-bank-account-list-bd.jpg" alt="Bank Account list showing bKash and Nagad cards" style="max-width:100%;border:1px solid #ddd;border-radius:6px;margin:15px 0;">
+    <p>After switching to Bangladesh, the Bank Account list shows cards with <strong>BKASH转码</strong> and <strong>Nagad转码</strong> channel types, with <strong>bKash scan</strong> and <strong>Nagad scan</strong> checkout counters.</p>
+
+    <h3>📸 Add New Account Form (Bangladesh)</h3>
+    <img src="images/09-bank-account-add-bd.jpg" alt="Add New account form showing bKash channel type" style="max-width:100%;border:1px solid #ddd;border-radius:6px;margin:15px 0;">
+    <p>The form shows: Base info (Supplier, Remarks) → Account details (Bank Card Number, account name) → 业务类型 (Collection/Payment) → Pay in channel (Channel type: BKASH转码, Mode: Identification Code, Page type: bKash scan).</p>
+
     <div class="warning">Multiple cards can share the same monitoring account. You can also modify the monitoring account independently.</div>
 </section>
 
@@ -201,6 +236,10 @@ Server configuration: https://your-domain.com</div>
     </div>
 
     <div class="success">Once connected, any bKash/Nagad OTP received on this phone will be automatically forwarded to the system backend for transaction verification.</div>
+
+    <h3>📸 OTP Monitoring Management</h3>
+    <img src="images/10-otp-monitor.jpg" alt="OTP Monitoring management page showing monitoring accounts" style="max-width:100%;border:1px solid #ddd;border-radius:6px;margin:15px 0;">
+    <p>The OTP监控管理 (OTP Monitoring Management) page shows all monitoring accounts, their status (Enable/Disable), related bank accounts, and operations (Delete, Modify, Associate account).</p>
 
     <h3>Template to Send to Local Operator</h3>
     <div class="code-block">Please install the monitoring app and log in with these credentials:
@@ -267,6 +306,30 @@ The app will automatically capture and upload OTP codes.</div>
         <span class="step-number">4</span>
         <strong>Merchant integrates via API</strong> using the provided documentation. Our team assists with any technical issues during integration.
     </div>
+
+    <h3>📸 Merchant List</h3>
+    <img src="images/02-merchant-list.jpg" alt="Merchant management list page" style="max-width:100%;border:1px solid #ddd;border-radius:6px;margin:15px 0;">
+    <p>The Merchant page shows all merchants with their account, balance, IP whitelist status, docking information (API Key, Callback mode), and operations (Modify, Details, Sub-account, Dropped order, bot, Delete).</p>
+
+    <h3>📸 Add New Merchant</h3>
+    <img src="images/03-merchant-add.jpg" alt="Add New Merchant dialog" style="max-width:100%;border:1px solid #ddd;border-radius:6px;margin:15px 0;">
+    <p>Simple form: Nickname, Account (login username), Password → Submit.</p>
+
+    <h3>📸 Supplier List</h3>
+    <img src="images/04-supplier-list.jpg" alt="Supplier management list page" style="max-width:100%;border:1px solid #ddd;border-radius:6px;margin:15px 0;">
+    <p>Suppliers (code merchants / account providers) are managed here. Each supplier shows their account, balance, risk control settings, and order acceptance status.</p>
+
+    <h3>📸 Add New Supplier</h3>
+    <img src="images/05-supplier-add.jpg" alt="Add New Supplier dialog" style="max-width:100%;border:1px solid #ddd;border-radius:6px;margin:15px 0;">
+    <p>Same as merchant: Nickname, Account, Password → Submit.</p>
+
+    <h3>📸 Merchant Agent (商户代理)</h3>
+    <img src="images/06-agent-list.jpg" alt="Merchant Agent list page" style="max-width:100%;border:1px solid #ddd;border-radius:6px;margin:15px 0;">
+    <p>Merchant Agents can manage multiple merchants. Shows agent name, account, associated merchants, collection/payout fee rates, and agent balance.</p>
+
+    <h3>📸 Add New Agent</h3>
+    <img src="images/07-agent-add.jpg" alt="Add New Agent dialog" style="max-width:100%;border:1px solid #ddd;border-radius:6px;margin:15px 0;">
+    <p>Fields: 代理名称 (Agent Name), 代理账号 (Agent Account), Login password, 代理商户 (Associated Merchants), 代收费率 (Collection Fee Rate), 代付费率 (Payout Fee Rate).</p>
 </section>
 
 <!-- Section 7: Product Config -->
