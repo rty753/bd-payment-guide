@@ -118,13 +118,30 @@
     
     <div class="step">
         <span class="step-number">2</span>
-        <strong>Fill in the card details:</strong>
+        <strong>Fill in the form fields:</strong>
+        <h4>🔹 Base Info</h4>
         <ul>
-            <li><strong>Code Merchant:</strong> Select the code merchant (leave blank if you manage your own accounts)</li>
-            <li><strong>Channel Type:</strong> Select <code>bKash</code> or <code>Nagad</code></li>
-            <li><strong>Mode:</strong> Keep default (embedded identification code)</li>
-            <li><strong>Account Number:</strong> Enter the bKash/Nagad phone number (e.g., <code>01XXXXXXXXX</code>)</li>
-            <li><strong>Remarks:</strong> Optional — add a label for easy identification</li>
+            <li><strong>Supplier:</strong> Select the supplier who provides the bKash/Nagad account. Leave blank if you manage your own accounts.</li>
+            <li><strong>Remarks:</strong> Optional — add a label for easy identification (e.g., "BD-bKash-01")</li>
+        </ul>
+        <h4>🔹 Account Details</h4>
+        <ul>
+            <li><strong>Bank Card Number:</strong> Enter the bank account number linked to the bKash/Nagad account (if applicable)</li>
+            <li><strong>UPI account / Wallet account*:</strong> Enter the bKash or Nagad phone number (e.g., <code>01XXXXXXXXX</code>)</li>
+            <li><strong>Account name:</strong> Enter the account holder's name</li>
+        </ul>
+        <h4>🔹 Business Type (业务类型)</h4>
+        <ul>
+            <li><strong>Collection:</strong> ✅ Check this to use the card for receiving payments (代收)</li>
+            <li><strong>Payment:</strong> ✅ Check this to use the card for sending payouts (代付)</li>
+            <li>You can check both for a combined collection + payout card (收付一体)</li>
+        </ul>
+        <h4>🔹 Pay-in Channel</h4>
+        <ul>
+            <li><strong>Channel type (Product)*:</strong> Select <code>bKash</code> or <code>Nagad</code> from the dropdown</li>
+            <li><strong>Mode:</strong> Keep default — <code>Implant ID code</code> (embedded identification code for transaction matching)</li>
+            <li><strong>Page type:</strong> Select <code>Common</code> for standard checkout</li>
+            <li><strong>Link:</strong> Paste the payment link/QR data if required by the channel</li>
         </ul>
     </div>
     
@@ -326,12 +343,13 @@ The app will automatically capture and upload OTP codes.</div>
     <p>Each card can have independent risk control parameters:</p>
 
     <table>
-        <tr><th>Setting</th><th>Example</th><th>Effect</th></tr>
-        <tr><td><strong>Daily Transaction Limit</strong></td><td><code>10</code></td><td>Auto-disable after 10 successful transactions today</td></tr>
-        <tr><td><strong>Daily Amount Limit</strong></td><td><code>500000</code></td><td>Auto-disable after 500,000 BDT received today</td></tr>
-        <tr><td><strong>Balance Limit</strong></td><td><code>1000000</code></td><td>Auto-disable when account balance reaches 1M BDT</td></tr>
-        <tr><td><strong>Amount Range</strong></td><td><code>100-50000</code></td><td>Only accept orders between 100-50,000 BDT</td></tr>
-        <tr><td><strong>Fixed Amounts</strong></td><td><code>500,1000,2000</code></td><td>Only accept orders of exactly 500, 1000, or 2000 BDT</td></tr>
+        <tr><th>Setting (Field Name)</th><th>Example</th><th>Effect</th></tr>
+        <tr><td><strong>日笔数 (Daily Transaction Limit)</strong></td><td><code>10</code></td><td>Auto-disable after 10 successful transactions today</td></tr>
+        <tr><td><strong>日金额 (Daily Amount Limit)</strong></td><td><code>500000</code></td><td>Auto-disable after 500,000 BDT received today</td></tr>
+        <tr><td><strong>Max pay-in orders per minute</strong></td><td><code>5</code></td><td>Limit to 5 incoming orders per minute (prevents overload)</td></tr>
+        <tr><td><strong>Balance Upper Limit</strong></td><td><code>1000000</code></td><td>Auto-disable when account balance reaches 1M BDT</td></tr>
+        <tr><td><strong>Collection Range</strong></td><td><code>100-50000</code></td><td>Only accept orders between 100-50,000 BDT</td></tr>
+        <tr><td><strong>Collection Range (Fixed)</strong></td><td><code>500,1000,2000</code></td><td>Only accept orders of exactly 500, 1000, or 2000 BDT</td></tr>
     </table>
 
     <div class="warning">When any limit is reached, the card automatically stops accepting new orders. You must manually re-enable it or adjust the limits.</div>
